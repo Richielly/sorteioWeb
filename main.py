@@ -4,7 +4,7 @@ import time
 import pandas as pd
 
 file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
-file2 = 'https://docs.google.com/spreadsheets/d/1PPYJRjeq798DU6HjVGjWXguzZAeesJpa_PsBrFwpGEQ/edit?usp=sharing'
+#file2 = 'https://docs.google.com/spreadsheets/d/1PPYJRjeq798DU6HjVGjWXguzZAeesJpa_PsBrFwpGEQ/edit?usp=sharing'
 
 #df2 = pd.read_html(file2, header=1)[0]
 numeros = 0;
