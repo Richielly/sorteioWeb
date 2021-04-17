@@ -9,7 +9,7 @@ file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
 #df2 = pd.read_html(file2, header=1)[0]
 numeros = 0;
 
-st.title("Sorteio Equiplano")
+st.title("Sorteio Web")
 
 def sorteio(df):
     barra = st.progress(0)
