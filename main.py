@@ -2,42 +2,73 @@ import random
 import streamlit as st
 import time
 import pandas as pd
+import lista as lista
 
-file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
 #file2 = 'https://docs.google.com/spreadsheets/d/1PPYJRjeq798DU6HjVGjWXguzZAeesJpa_PsBrFwpGEQ/edit?usp=sharing'
 
-#df2 = pd.read_html(file2, header=1)[0]
+tipo = st.sidebar.radio("Tipo sorteio", ["Arquivo", "Sequência numérica"])
 numeros = 0;
+if tipo == "Sequência numérica":
 
-st.title("Sorteio Web")
+    quantidade = st.sidebar.number_input("Quantidade de números para sorteio")
 
-def sorteio(df):
-    barra = st.progress(0)
-    with st.empty():
-        for seconds in range(101):
-            st.write(f"⏳ Carregando números participantes {seconds} % ")
-            time.sleep(.1)
-            barra.progress(seconds)
-        time.sleep(1)
-        for seconds in range(101):
-            st.write(f" Escolhendo o vencedor {seconds} % ")
-            time.sleep(.1)
-            barra.progress(seconds)
-        st.header("✔ número sorteado!")
-    time.sleep(2)
-    numero = (random.randrange(1, numeros))
-    st.header('O Número da Sorte foi ... ' + str(numero))
-    sorteado = df.loc
-    arquivo = st.success(sorteado[numero].values[2] + ' ' + sorteado[numero].values[1] + ", pela resposta ao chamado " + str(
-        sorteado[numero].values[0]) + " Parabéns.")
-    st.balloons()
 
-if (file is not None):
-    df = pd.read_excel(file)
-    numeros = df.usuario.count()
-    df.set_index('No', inplace=True)
-    if(st.sidebar.checkbox('Dados')):
-        st.write(df.head(numeros))
-    st.info('Quantidade de números participantes no sorteio: ' + str(numeros))
+
     if st.button('Iniciar Sorteio'):
-        sorteio(df)
+            with st.empty():
+                print(lista.historico_lista())
+                if len(lista.historico_lista()) == 0:
+                    lista_numeros = list(lista.lista_numeros(quantidade))
+                    with open("lista.txt", "w") as arq:
+                        arq.write(str(lista_numeros))
+
+                num = open("lista.txt", "r")
+
+                lista_de_numeros = lista.historico_lista()
+
+
+                numero = (random.choice(lista_de_numeros))
+
+                lista_de_numeros.remove(str(numero))
+
+                with open("lista.txt", "w") as arq:
+                    arq.write(str(lista_de_numeros))
+
+                st.info('Quantidade de números participantes para ser sorteado: ' + str(len(lista.historico_lista())))
+
+            st.title('O número sorteado foi ' + numero)
+
+if tipo == "Arquivo":
+    file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
+
+    def sorteio(df):
+        barra = st.progress(0)
+        with st.empty():
+            for seconds in range(101):
+                st.write(f"⏳ Carregando números participantes {seconds} % ")
+                time.sleep(.1)
+                barra.progress(seconds)
+            time.sleep(.1)
+            for seconds in range(101):
+                st.write(f" Escolhendo o vencedor {seconds} % ")
+                time.sleep(.1)
+                barra.progress(seconds)
+            st.header("✔ número sorteado!")
+        time.sleep(1)
+        numero = (random.randrange(1, numeros))
+        st.header('O Número da Sorte foi ... ' + str(numero))
+        sorteado = df.loc
+        arquivo = st.success("A pessoa sorteada foi " + sorteado[numero].values[1] + ' ' + sorteado[numero].values[2] + " parabéns.")
+        st.balloons()
+
+    if (file is not None):
+        df = pd.read_excel(file)
+        numeros = df.nome.count()
+        df.set_index('numero', inplace=True)
+        if(st.sidebar.checkbox('Dados')):
+            st.write(df.head(numeros))
+        st.info('Quantidade de números participantes no sorteio: ' + str(numeros))
+        if st.button('Iniciar Sorteio'):
+            sorteio(df)
+
+
