@@ -6,17 +6,18 @@ import lista as lista
 
 #file2 = 'https://docs.google.com/spreadsheets/d/1PPYJRjeq798DU6HjVGjWXguzZAeesJpa_PsBrFwpGEQ/edit?usp=sharing'
 
+container_1 = st.container()
+if st.sidebar.button("Limpar"):
+    lista.limpar_lista()
 tipo = st.sidebar.radio("Tipo sorteio", ["Arquivo", "Sequência numérica"])
 numeros = 0;
 if tipo == "Sequência numérica":
 
     quantidade = st.sidebar.number_input("Quantidade de números para sorteio")
 
-
-
     if st.button('Iniciar Sorteio'):
             with st.empty():
-                print(lista.historico_lista())
+
                 if len(lista.historico_lista()) == 0:
                     lista_numeros = list(lista.lista_numeros(quantidade))
                     with open("lista.txt", "w") as arq:
@@ -24,11 +25,13 @@ if tipo == "Sequência numérica":
 
                 num = open("lista.txt", "r")
 
+                with st.empty():
+                    for seconds in range(101):
+                        st.title(f"👑 Embaralhando números ... {seconds} % ")
+                        time.sleep(.05)
+
                 lista_de_numeros = lista.historico_lista()
-
-
                 numero = (random.choice(lista_de_numeros))
-
                 lista_de_numeros.remove(str(numero))
 
                 with open("lista.txt", "w") as arq:
@@ -36,7 +39,16 @@ if tipo == "Sequência numérica":
 
                 st.info('Quantidade de números participantes para ser sorteado: ' + str(len(lista.historico_lista())))
 
-            st.title('O número sorteado foi ' + numero)
+                st.balloons()
+                time.sleep(2)
+                st.title(f'🎁 O número sorteado foi ... ' + numero + ' 🎁')
+
+                with container_1:
+                    st.title("Números sorteados: ")
+                    st.header(str(lista.historico_sorteado(numero)).replace("'",""))
+                    st.title("")
+
+
 
 if tipo == "Arquivo":
     file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
