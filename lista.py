@@ -12,7 +12,8 @@ def historico_lista():
 
 def historico_sorteado(num_sorteado):
     global sorteados
-    sorteados.append(num_sorteado)
+    if num_sorteado != '0':
+        sorteados.append(num_sorteado)
     return sorteados
 
 def limpar_lista():

@@ -16,6 +16,7 @@ if tipo == "Sequência numérica":
     quantidade = st.sidebar.number_input("Quantidade de números para sorteio")
 
     if st.button('Iniciar Sorteio'):
+
             with st.empty():
 
                 if len(lista.historico_lista()) == 0:
@@ -47,8 +48,6 @@ if tipo == "Sequência numérica":
                     st.title("Números sorteados: ")
                     st.header(str(lista.historico_sorteado(numero)).replace("'",""))
                     st.title("")
-
-
 
 if tipo == "Arquivo":
     file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
