@@ -20,34 +20,38 @@ if tipo == "Sequência numérica":
             with st.empty():
 
                 if len(lista.historico_lista()) == 0:
+                    lista.limpar_lista()
                     lista_numeros = list(lista.lista_numeros(quantidade))
                     with open("lista.txt", "w") as arq:
                         arq.write(str(lista_numeros))
 
                 num = open("lista.txt", "r")
 
-                with st.empty():
-                    for seconds in range(101):
-                        st.title(f"👑 Embaralhando números ... {seconds} % ")
-                        time.sleep(.05)
+                if quantidade == 0.00:
+                    st.warning("Quantidade de números deve ser diferente de zero. ")
+                else:
+                    with st.empty():
+                        for seconds in range(101):
+                            st.title(f"👑 Embaralhando números ... {seconds} % ")
+                            time.sleep(.05)
 
-                lista_de_numeros = lista.historico_lista()
-                numero = (random.choice(lista_de_numeros))
-                lista_de_numeros.remove(str(numero))
+                    lista_de_numeros = lista.historico_lista()
+                    numero = (random.choice(lista_de_numeros))
+                    lista_de_numeros.remove(str(numero))
 
-                with open("lista.txt", "w") as arq:
-                    arq.write(str(lista_de_numeros))
+                    with open("lista.txt", "w") as arq:
+                        arq.write(str(lista_de_numeros))
 
-                st.info('Quantidade de números participantes para ser sorteado: ' + str(len(lista.historico_lista())))
+                    st.info('Quantidade de números participantes para ser sorteado: ' + str(len(lista.historico_lista())))
 
-                st.balloons()
-                time.sleep(2)
-                st.title(f'🎁 O número sorteado foi ... ' + numero + ' 🎁')
+                    st.balloons()
+                    time.sleep(2)
+                    st.title(f'🎁 O número sorteado foi ... ' + numero + ' 🎁')
 
-                with container_1:
-                    st.title("Números sorteados: ")
-                    st.header(str(lista.historico_sorteado(numero)).replace("'",""))
-                    st.title("")
+                    with container_1:
+                        st.title("Números sorteados: ")
+                        st.header(str(lista.historico_sorteado(numero)).replace("'",""))
+                        st.title("")
 
 if tipo == "Arquivo":
     file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
