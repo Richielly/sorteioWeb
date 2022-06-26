@@ -31,9 +31,10 @@ if tipo == "Sequência numérica":
                     st.warning("Quantidade de números deve ser diferente de zero. ")
                 else:
                     with st.empty():
-                        for seconds in range(101):
-                            st.title(f"👑 Embaralhando números ... {seconds} % ")
-                            time.sleep(.05)
+                        for seconds in range(10):
+                            imoji = (random.choice(['💝','🎈','🎀','🏆','❓','👏','🎊','🎉','🎁','🔮']))
+                            st.title(f" Embaralhando números ... {imoji}")
+                            time.sleep(.5)
 
                     lista_de_numeros = lista.historico_lista()
                     numero = (random.choice(lista_de_numeros))
