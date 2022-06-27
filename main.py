@@ -3,6 +3,9 @@ import streamlit as st
 import time
 import pandas as pd
 import lista as lista
+import os
+from playsound import playsound
+
 
 #file2 = 'https://docs.google.com/spreadsheets/d/1PPYJRjeq798DU6HjVGjWXguzZAeesJpa_PsBrFwpGEQ/edit?usp=sharing'
 
@@ -53,6 +56,10 @@ if tipo == "Sequência numérica":
                         st.title("Números sorteados: ")
                         st.header(str(lista.historico_sorteado(numero)).replace("'",""))
                         st.title("")
+                    try:
+                        playsound(os.getcwd()+'\\aplausos.mp3')
+                    except:
+                        playsound(os.getcwd() + '\\aplausos2.mp3')
 
 if tipo == "Arquivo":
     file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
