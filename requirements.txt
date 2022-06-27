@@ -1,3 +1,4 @@
 streamlit == 1.10.0
 xlrd == 2.0.0
 openpyxl == 3.0.7
+playsound == 1.2.2
